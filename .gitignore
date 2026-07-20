@@ -1,0 +1,19 @@
+# --- dependencies & build output ---
+node_modules
+dist
+.vite
+
+# --- OS / editor junk ---
+.DS_Store
+Thumbs.db
+.idea
+.vscode
+*.local
+
+# --- env / secrets ---
+.env
+.env.*
+
+# --- internal planning & git docs (keep out of the public repo) ---
+PROJECT_PLAN.md
+GIT_SETUP.md
