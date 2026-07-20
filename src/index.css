@@ -1,0 +1,366 @@
+/* ---------------------------------------------------------------------------
+   Design tokens. Defining colors/spacing as CSS variables in one place means
+   we can restyle or add a dark theme later without hunting through the file.
+--------------------------------------------------------------------------- */
+:root {
+  --bg: #0f1115;
+  --surface: #191d24;
+  --surface-2: #212632;
+  --border: #2b313c;
+  --text: #e7ebf0;
+  --muted: #9aa4b2;
+  --accent: #6366f1;
+  --accent-hover: #7c7ff2;
+
+  /* urgency palette */
+  --overdue: #ef4444;
+  --urgent: #f97316;
+  --soon: #eab308;
+  --later: #22c55e;
+
+  --radius: 12px;
+  --gap: 14px;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+/* ---- header ---- */
+.app__header {
+  margin-bottom: 24px;
+}
+.app__header h1 {
+  margin: 0;
+  font-size: 32px;
+  letter-spacing: -0.5px;
+  background: linear-gradient(90deg, #818cf8, #22d3ee);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.tagline {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* ---- shared card ---- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+
+/* ---- create form ---- */
+.form {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.form__row {
+  display: flex;
+  gap: 10px;
+}
+.form input {
+  flex: 1;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--text);
+  font-size: 14px;
+  min-width: 0;
+}
+.form input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.form button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.form button:hover {
+  background: var(--accent-hover);
+}
+
+/* ---- list ---- */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+.empty {
+  color: var(--muted);
+  text-align: center;
+  padding: 32px 0;
+}
+
+/* ---- task row ---- */
+.task {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.task__check input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.task__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.task__title {
+  font-size: 15px;
+}
+.task__course {
+  font-size: 12px;
+  color: var(--muted);
+}
+.task--done .task__title {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+.task__delete {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+}
+.task__delete:hover {
+  color: var(--overdue);
+}
+
+/* ---- urgency pill ---- */
+.pill {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.pill--overdue {
+  background: color-mix(in srgb, var(--overdue) 22%, transparent);
+  color: var(--overdue);
+}
+.pill--urgent {
+  background: color-mix(in srgb, var(--urgent) 22%, transparent);
+  color: var(--urgent);
+}
+.pill--soon {
+  background: color-mix(in srgb, var(--soon) 22%, transparent);
+  color: var(--soon);
+}
+.pill--later {
+  background: color-mix(in srgb, var(--later) 20%, transparent);
+  color: var(--later);
+}
+
+/* ---- tabs ---- */
+.tabs {
+  display: flex;
+  gap: 6px;
+  margin-top: 14px;
+}
+.tab {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.tab--active {
+  background: var(--surface-2);
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+/* ---- filter chips ---- */
+.filterbar {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0;
+}
+.chip {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 5px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.chip--active {
+  color: var(--text);
+  border-color: var(--accent);
+  background: var(--surface-2);
+}
+
+/* ---- focus timer ---- */
+.timer {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+.timer--focus {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+}
+.timer--break {
+  border-color: color-mix(in srgb, var(--later) 55%, var(--border));
+}
+.timer__left {
+  display: flex;
+  flex-direction: column;
+}
+.timer__mode {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+}
+.timer__clock {
+  font-size: 34px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+.timer__controls {
+  display: flex;
+  gap: 8px;
+}
+.timer__controls button {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.timer__controls button:hover {
+  background: var(--accent-hover);
+}
+.btn--ghost {
+  background: var(--surface-2) !important;
+  color: var(--muted) !important;
+}
+.timer__today {
+  margin-left: auto;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+.timer__todaynum {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--later);
+}
+.timer__todaylabel {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ---- habit card + heatmap ---- */
+.habit {
+  margin-bottom: var(--gap);
+}
+.habit__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.habit__name {
+  font-size: 15px;
+  font-weight: 600;
+}
+.habit__streaks {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  margin-left: 4px;
+}
+.habit__streaks .muted {
+  color: var(--muted);
+}
+.habit__head > button:not(.task__delete) {
+  margin-left: auto;
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.habit__head .btn--done {
+  border-color: var(--later);
+  color: var(--later);
+}
+
+.heatmap {
+  display: flex;
+  gap: 3px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.heatmap__col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.cell {
+  width: 13px;
+  height: 13px;
+  border-radius: 3px;
+  background: var(--surface-2);
+}
+.cell--l0 {
+  background: #20262f;
+}
+.cell--l1 {
+  background: #0e4429;
+}
+.cell--l2 {
+  background: #006d32;
+}
+.cell--l3 {
+  background: #26a641;
+}
+.cell--l4 {
+  background: #39d353;
+}
