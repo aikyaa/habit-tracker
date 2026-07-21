@@ -6,6 +6,7 @@ export const KEYS = {
   sessions: "momentum.sessions.v0",
   habits: "momentum.habits.v0",
   habitLogs: "momentum.habitLogs.v0",
+  intention: "momentum.intention.v0", // { date, text } — one line per day
 };
 
 export function load(key, fallback) {
