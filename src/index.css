@@ -364,3 +364,49 @@ body {
 .cell--l4 {
   background: #39d353;
 }
+
+/* ---------------------------------------------------------------------------
+   Daily intention + weekly stats bar (v1 additions).
+--------------------------------------------------------------------------- */
+.intention {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.intention__label {
+  color: var(--muted);
+  font-size: 13px;
+  white-space: nowrap;
+}
+.intention__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 15px;
+  outline: none;
+}
+.statsbar {
+  display: flex;
+  gap: var(--gap);
+  margin-bottom: var(--gap);
+}
+.stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.stat__num {
+  font-size: 22px;
+  font-weight: 700;
+}
+.stat__label {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 2px;
+}
