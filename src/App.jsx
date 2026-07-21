@@ -2,6 +2,8 @@ import { useState } from "react";
 import FocusTimer from "./components/FocusTimer.jsx";
 import Deadlines from "./components/Deadlines.jsx";
 import Habits from "./components/Habits.jsx";
+import DailyIntention from "./components/DailyIntention.jsx";
+import StatsBar from "./components/StatsBar.jsx";
 
 // ---------------------------------------------------------------------------
 // PHASE 1. The messy Phase-0 App.jsx has been split: date/storage/streak logic
@@ -32,6 +34,9 @@ export default function App() {
           </button>
         </nav>
       </header>
+
+      <DailyIntention />
+      <StatsBar />
 
       {/* Timer sits above both views so a focus session keeps running even
           while you switch tabs. */}
