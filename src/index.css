@@ -36,7 +36,7 @@ body {
 }
 
 .app {
-  max-width: 620px;
+  max-width: 720px;
   margin: 0 auto;
   padding: 40px 20px 80px;
 }
@@ -409,4 +409,102 @@ body {
   color: var(--muted);
   font-size: 12px;
   margin-top: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+   Calendar week view (v2). The collision algorithm decides each event's left/
+   width; CSS just maps those fractions + the minute math onto the grid.
+--------------------------------------------------------------------------- */
+.cal__nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0;
+}
+.cal__range {
+  color: var(--muted);
+  font-size: 13px;
+  margin-right: auto;
+}
+.cal {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  padding: 0;
+  overflow: hidden;
+}
+.cal__corner {
+  border-bottom: 1px solid var(--border);
+}
+.cal__head {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-bottom: 1px solid var(--border);
+}
+.cal__day-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 12px;
+  color: var(--muted);
+  border-left: 1px solid var(--border);
+}
+.cal__day-label.is-today {
+  color: var(--accent);
+  font-weight: 700;
+}
+.cal__daynum {
+  font-size: 15px;
+  color: var(--text);
+}
+.cal__gutter {
+  position: relative;
+}
+.cal__hour {
+  font-size: 10px;
+  color: var(--muted);
+  text-align: right;
+  padding-right: 6px;
+  box-sizing: border-box;
+  border-top: 1px solid transparent;
+  transform: translateY(-6px);
+}
+.cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  position: relative;
+}
+.cal__col {
+  position: relative;
+  border-left: 1px solid var(--border);
+  /* faint hour lines */
+  background-image: linear-gradient(var(--border) 1px, transparent 1px);
+  background-size: 100% 44px;
+}
+.cal__event {
+  position: absolute;
+  background: color-mix(in srgb, var(--accent) 32%, var(--surface-2));
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  padding: 2px 5px;
+  font-size: 11px;
+  overflow: hidden;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.cal__event:hover {
+  background: color-mix(in srgb, var(--accent) 45%, var(--surface-2));
+}
+.cal__event-title {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cal__event-time {
+  color: var(--muted);
+  font-size: 10px;
 }

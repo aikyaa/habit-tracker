@@ -2,6 +2,7 @@ import { useState } from "react";
 import FocusTimer from "./components/FocusTimer.jsx";
 import Deadlines from "./components/Deadlines.jsx";
 import Habits from "./components/Habits.jsx";
+import Calendar from "./components/Calendar.jsx";
 import DailyIntention from "./components/DailyIntention.jsx";
 import StatsBar from "./components/StatsBar.jsx";
 
@@ -32,6 +33,12 @@ export default function App() {
           >
             Habits
           </button>
+          <button
+            className={view === "calendar" ? "tab tab--active" : "tab"}
+            onClick={() => setView("calendar")}
+          >
+            Calendar
+          </button>
         </nav>
       </header>
 
@@ -42,7 +49,9 @@ export default function App() {
           while you switch tabs. */}
       <FocusTimer />
 
-      {view === "deadlines" ? <Deadlines /> : <Habits />}
+      {view === "deadlines" && <Deadlines />}
+      {view === "habits" && <Habits />}
+      {view === "calendar" && <Calendar />}
     </div>
   );
 }
