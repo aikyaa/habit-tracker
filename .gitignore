@@ -14,6 +14,13 @@ Thumbs.db
 .env
 .env.*
 
+# --- python backend ---
+server/.venv
+__pycache__/
+*.pyc
+server/app.db
+.pytest_cache
+
 # --- internal planning & git docs (keep out of the public repo) ---
 PROJECT_PLAN.md
 GIT_SETUP.md
