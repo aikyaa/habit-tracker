@@ -37,3 +37,20 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt
       - run: pytest
+
+  deploy:
+    name: Deploy frontend to Vercel
+    needs: [frontend, backend]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Requires three repo secrets (Settings → Secrets → Actions):
+      #   VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID
+      # Remove this job until you've set them, or it will fail on main.
+      - uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: "--prod"
