@@ -1,0 +1,25 @@
+name: CI
+
+# Run on every push and pull request. Pair this with a branch-protection rule on
+# `main` (Settings → Branches) so nothing merges unless these checks pass — that
+# recovers the safety of PR review for our trunk-based workflow.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  frontend:
+    name: Frontend (lint · test · build)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+      # Formatting is a local convenience (npm run format), not a hard gate —
+      # run `npx prettier --write .` before your first commit to normalize.
