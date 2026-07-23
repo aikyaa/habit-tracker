@@ -1,50 +1,55 @@
 # Momentum
 
-A student productivity assistant — deadline manager at its core, with a focus
-timer, habit heatmap, and a collision-aware calendar coming in later phases.
-See [`PROJECT_PLAN.md`](./PROJECT_PLAN.md) for the full roadmap and the reasoning
-behind each decision.
+A student productivity assistant: deadline manager at its core, plus a focus
+timer, habit heatmap, a daily intention, weekly stats, and a collision-aware
+weekly calendar. React + Vite frontend, FastAPI + SQLAlchemy backend, shipped
+through a GitHub Actions CI/CD pipeline.
 
-## Status: Phase 0 — messy prototype
+## Features
+- **Deadlines** — full CRUD with course tags, due dates, urgency colors, and a "due this week" filter.
+- **Focus timer** — Pomodoro (25/5) that logs focused minutes.
+- **Habits** — GitHub-style heatmap with intensity + current/longest streaks.
+- **Daily intention** — one line that matters today; resets each morning.
+- **Weekly stats** — focus minutes, tasks done, active habits.
+- **Calendar** — weekly view where overlapping events lay out side-by-side via a real collision algorithm.
 
-Right now the whole app is deliberately crammed into `src/App.jsx`: deadlines
-CRUD (create, read, update, delete) persisted to the browser's `localStorage`.
-It's intentionally unstructured so we can *feel* the mess before refactoring it
-into `components/`, `hooks/`, and `store/` in Phase 1.
-
-### What works
-- Add a deadline (title, optional course, optional due date)
-- See deadlines sorted by urgency; done items sink to the bottom
-- Check off / un-check a deadline
-- Delete a deadline
-- Color-coded "days left" pill (overdue → red, ≤1d → orange, ≤3d → yellow, later → green)
-- Everything survives a page refresh (localStorage)
-
-## Run it
+## Run the frontend
 
 ```bash
 npm install
-npm run dev
+npm run dev        # http://localhost:5173
+npm test           # unit tests (date, streaks, stats, collision)
+npm run lint       # ESLint
 ```
 
-Then open the URL Vite prints (usually http://localhost:5173).
-
-To make a production build:
+## Run the backend (optional — app works on localStorage without it)
 
 ```bash
-npm run build
-npm run preview
+cd server
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn main:app --reload    # http://localhost:8000, docs at /docs
+pytest
 ```
 
-## Tech
-- **React 18 + Vite** — component UI, fast dev server.
-- **localStorage** — the Phase 0 "database". Hidden behind a store module in a
-  later phase so it can be swapped for a FastAPI + SQL backend without touching
-  the UI.
+See [`server/README.md`](./server/README.md) for how to point the frontend at
+the API.
 
-## Next up (Phase 0 → 1)
-1. "Due this week" view
-2. Pomodoro focus timer
-3. Habit heatmap + streaks
-4. Refactor `App.jsx` into components/hooks/store + add unit tests
-5. CI/CD pipeline + first deploy
+## Project structure
+```
+src/
+  components/   # Deadlines, FocusTimer, Habits, HabitCard, Calendar, DailyIntention, StatsBar
+  hooks/        # useLocalStorage, useTimer, useDailyIntention
+  lib/          # date, storage, streaks, stats, collision, week  (+ *.test.js)
+  api/          # REST client mirroring the backend
+server/         # FastAPI + SQLAlchemy + Pydantic (models, schemas, crud, main, tests)
+.github/workflows/ci.yml   # lint · test · build · pytest · deploy
+```
+
+## Architecture notes
+- CRUD lives behind a boundary (`hooks/useLocalStorage` on the frontend,
+  `crud.py` factory on the backend), so storage can change without rewriting
+  features.
+- The calendar collision layout (`lib/collision.js`) is a pure
+  interval-partitioning function, unit-tested in isolation.
+- CI runs on every push/PR; pair with branch protection on `main`.
